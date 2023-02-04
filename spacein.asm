@@ -1,6 +1,7 @@
 IDEAL
 MODEL small
 STACK 100h
+
 DATASEG
 	testText db "Testing",10,".",10,".",10,"$"
 	;Cannon
@@ -13,7 +14,7 @@ DATASEG
 	;------------------------------------------------
 	;Bullet
 	;------------------------------------------------
-	smokeInTheAir dw 0 ; 1 or 0 depends on if theres a cannon bullet already
+	smokeInTheAir dw 0 ; 1 or 0 depends on if theres a cannon bullet is allready fired
 	startingPoint dw 15 ;half of cannonWidth
 	bulletHeight dw 8
 	bulletWidth dw 1
@@ -24,17 +25,24 @@ DATASEG
 	
 	;Enemies Related
 	;------------------------------------------------
-	enemyClusterXDelta dw 70
-	enemyClusterYDelta dw 50
-	enemyHeight dw 10
-	enemyWidth dw 15
-	enemiesArray dw 1,4,28h,4,21,4,28h,4,41,4,28h,4,61,4,28h,4,81,4,28h,4,101,4,28h,4,121,4,28h,4,141,4,28h,4,161,4,28h,4,181,4,28h,4,201,4,28h,4,1,22,28h,4,21,22,28h,4,41,22,28h,4,61,22,28h,4,81,22,28h,4,101,22,28h,4,121,22,28h,4,141,22,28h,4,161,22,28h,4,181,22,28h,4,201,22,28h,4,1,40,28h,4,21,40,28h,4,41,40,28h,4,61,40,28h,4,81,40,28h,4,101,40,28h,4,121,40,28h,4,141,40,28h,4,161,40,28h,4,181,40,28h,4,201,40,28h,4,1,58,28h,4,21,58,28h,4,41,58,28h,4,61,58,28h,4,81,58,28h,4,101,58,28h,4,121,58,28h,4,141,58,28h,4,161,58,28h,4,181,58,28h,4,201,58,28h,4,1,76,28h,4,21,76,28h,4,41,76,28h,4,61,76,28h,4,81,76,28h,4,101,76,28h,4,121,76,28h,4,141,76,28h,4,161,76,28h,4,181,76,28h,4,201,76,28h,4
+	enemyClusterMovementCounter dw 0
+	enemyClusterMovementSpeed dw 200 ;the higher the slower
+	enemyClusterX dw 70
+	enemyClusterY dw 20
+	enemyClusterXDelta dw 5
+	enemyClusterYDelta dw 15
+	enemyHeight dw 8
+	enemyWidth dw 12
+	enemyMoveDirection dw 1 ;1 = right 0 = left
+	enemiesArray dw 1,3,4,19,3,4,37,3,4,55,3,4,73,3,4,91,3,4,109,3,4,127,3,4,145,3,4,163,3,4,181,3,4,199,3,4,217,3,4,1,19,4,19,19,4,37,19,4,55,19,4,73,19,4,91,19,4,109,19,4,127,19,4,145,19,4,163,19,4,181,19,4,199,19,4,217,19,4,1,35,4,19,35,4,37,35,4,55,35,4,73,35,4,91,35,4,109,35,4,127,35,4,145,35,4,163,35,4,181,35,4,199,35,4,217,35,4,1,51,4,19,51,4,37,51,4,55,51,4,73,51,4,91,51,4,109,51,4,127,51,4,145,51,4,163,51,4,181,51,4,199,51,4,217,51,4,1,67,4,19,67,4,37,67,4,55,67,4,73,67,4,91,67,4,109,67,4,127,67,4,145,67,4,163,67,4,181,67,4,199,67,4,217,67,4,0
+
 	;------------------------------------------------
 	
 	;Colors
 	;-------------------------------------------------
 	black dw 00h
 	white dw 0Fh
+	blackOrWhite dw 00h
 	;-------------------------------------------------
 	
 	
@@ -165,6 +173,16 @@ proc bulletSlower
 	endOfBulletSlower:
 endp
 
+proc shoot
+	mov [smokeInTheAir], 1
+	mov ax, [cannonX]
+	add ax, [startingPoint]
+	mov [bulletX], ax
+	mov ax, [cannonY]
+	mov [bulletY], ax
+	call drawBullet
+	ret
+endp
 
 proc drawBullet ;gets x and y and draws a bullet
 	push bp
@@ -174,13 +192,8 @@ proc drawBullet ;gets x and y and draws a bullet
 	push [white]
 	push [bulletHeight]
 	push [bulletWidth]
-	mov ax, [bp + 6]
-	mov [BulletY], ax
-	push ax
-	mov ax, [bp + 4]
-	add ax, [startingPoint]
-	push ax
-	mov [bulletX], ax
+	push [bulletY]
+	push [bulletX]
 	call drawRect
 	pop ax
 	pop bp
@@ -211,19 +224,19 @@ proc drawEnemies ;draws enemys from an array (they are bricks for now)
 	mov si, ax
 	drawEnemiesLoop:
 		mov ax, [si]
-		cmp ax, 00h
+		cmp ax, 0
 		je drawEnemiesEnd
 		
-		mov ax, [si + 6]
+		mov ax, [si + 4]
 		cmp ax, 0
 		je drawEnemiesNonpresent
 		cmp ax, 4
 		jl drawEnemiesKilled
-		push [si + 4]
+		push [blackOrWhite]
 		jmp drawEnemiesPresent
 		
 		drawEnemiesKilled:
-		push [black]
+		push [blackOrWhite]
 		push [enemyHeight]
 		push[enemyWidth]
 		mov dx, [si + 2]
@@ -250,13 +263,91 @@ proc drawEnemies ;draws enemys from an array (they are bricks for now)
 		call drawRect
 		
 		drawEnemiesContinue:
-		add si, 8
+		add si, 6
 		jmp drawEnemiesLoop
 	drawEnemiesEnd:
 	pop si
 	pop ax
 	ret
 endp
+
+proc collisionField
+	push bp
+	mov bp, sp
+	push bx
+	push cx
+	push dx
+	
+		mov cx, [bp + 4] ;bottom collision
+		mov dx, [bp + 6]
+		add dx, [enemyHeight]
+		inc dx
+		cmp dx, [bulletY]
+		jne leftCollision
+		sub cx, 2
+		mov dx, [bulletX]
+		sub dx, cx
+		cmp dx, [enemyWidthPlus]
+		ja leftCollision
+		jmp collisionFieldHit
+	leftCollision:
+		mov cx, [bp + 4]
+		mov dx, [bp + 6]
+		dec cx
+		cmp cx, [bulletX]
+		jne rightCollision
+		dec dx
+		mov cx, [bulletY]
+		sub cx, dx
+		cmp cx, [enemyHeightPlus]
+		ja rightCollision
+		jmp collisionFieldHit
+	rightCollision:
+		mov cx, [bp + 4]
+		mov dx, [bp + 6]
+		add cx, [enemyWidth]
+		inc cx
+		cmp cx, [bulletX]
+		jne collisionFieldEnd
+		dec dx
+		mov cx, [bulletY]
+		sub cx, dx
+		cmp cx, [enemyHeightPlus]
+		ja collisionFieldEnd
+		jmp collisionFieldHit
+		
+	collisionFieldHit:
+		mov ax, 1
+	
+	collisionFieldEnd:
+	pop dx
+	pop cx
+	pop bx
+	pop bp
+	ret 4
+endp
+	
+proc collisionEnemies
+	push ax
+	push si
+	
+	mov si, ax
+	collideEnemiesLoop:
+		mov ax, [si]
+		cmp ax, 0
+		je collideEnemiesEnd
+		
+		mov ax, [si + 4]
+		cmp ax, 0
+		jl collideEnemiesContinue
+		jmp collideEnemiesPresent
+		
+		collideEnemiesContinue:
+			mov ax, si
+			add ax, 6
+			
+
+
 
 
 start:
@@ -266,10 +357,11 @@ start:
 	call graphicMode
 	
 	mainLoop:
+	
 		call isKeyPressed
 		jz calculatorLoopConnector
-		
 		call clearCannon
+		
 		
 		;Keys Section
 		;-------------------------------------------
@@ -300,10 +392,7 @@ start:
 		KeyL:
 		cmp [smokeInTheAir], 1
 		je calculatorLoop
-			mov [smokeInTheAir], 1
-			push [cannonY]
-			push [cannonX]
-			call drawBullet
+			call shoot
 			jmp calculatorLoop
 		KeyP:
 			jmp exit
@@ -313,44 +402,84 @@ start:
 		
 		calculatorLoop:
 			cmp [smokeInTheAir], 1
-			jne sidesBoundries
-			cmp [bulletY], 0
-			jg sidesBoundries
-			mov [smokeInTheAir], 0
-			push [bulletY]
-			push [cannonX]
-			call clearBullet
+			jne enemyBoundries
+				cmp [bulletY], 0
+				jg enemyBoundries
+				mov [smokeInTheAir], 0
+				push [bulletY]
+				push [bulletX]
+				call clearBullet
 			
-			sidesBoundries:
+			enemyBoundries:
+			mov ax, [enemyClusterMovementSpeed]
+			cmp [enemyClusterMovementCounter], ax ;counter for not moving the enemy every 1/1000 of a second
+			jle endOfEnemyBoundriesConnector 
+			mov bx, [enemyClusterY]
+				mov cx, [enemyClusterX]
+				mov ax, offset enemiesArray
+				mov [blackOrWhite], 00h
+				call drawEnemies
+				cmp [enemyMoveDirection], 0
+				je leftSideboundry
+					cmp [enemyClusterX], 75 ;right side boundry
+					ja changeEnemyDirectionToLeft
+					mov ax, [enemyClusterX]
+					add ax, [enemyClusterXDelta]
+					mov [enemyClusterX], ax
+					mov [enemyClusterMovementCounter], 1
+					jmp endOfEnemyBoundries
+					
+				leftSideboundry:
+					cmp [enemyClusterX], 30
+					jb changeEnemyDirectionToRight
+					mov ax, [enemyClusterX]
+					sub ax, [enemyClusterXDelta]
+					mov [enemyClusterX], ax
+					mov [enemyClusterMovementCounter], 0
+					jmp endOfEnemyBoundries
+					
+				endOfEnemyBoundriesConnector:
+				jmp endOfEnemyBoundries
+					
+				changeEnemyDirectionToLeft:
+					mov ax, [enemyClusterY]
+					add ax, [enemyClusterYDelta]
+					mov [enemyClusterY], ax
+					mov [enemyMoveDirection], 0
+					mov [enemyClusterMovementCounter], 0
+					jmp endOfEnemyBoundries
+					
+				changeEnemyDirectionToRight:
+					mov ax, [enemyClusterY]
+					add ax, [enemyClusterYDelta]
+					mov [enemyClusterY], ax
+					mov [enemyMoveDirection], 1
+					mov [enemyClusterMovementCounter], 0
+					jmp endOfEnemyBoundries
+					
+			endOfEnemyBoundries:
+			add [enemyClusterMovementCounter], 1
 			
-			
-		
 		drawLoop:
-			mov bx, [enemyClusterYDelta]
-			mov cx, [enemyClusterXDelta]
+			mov bx, [enemyClusterY]
+			mov cx, [enemyClusterX]
 			mov ax, offset enemiesArray
+			mov [blackOrWhite], 0Fh
 			call drawEnemies
-			push 10h
-			call waits
+
 			call drawCannon
 			
 			cmp [smokeInTheAir], 1
 			jne skipBulletUpdate
-				push [bulletY]
-				push [cannonX]
-				call clearBullet
-				;call bulletSlower check whats wrong with it in middle meeting
 				cmp [bulletSpeed], 1
-				je subByBulletY1
-				mov [bulletSpeed], 1
-				jmp endOfBulletSlower1
-				subByBulletY1:
-				sub [bulletY], 1
-				mov [bulletSpeed], 0
-				endOfBulletSlower1:
-				push [bulletY]
-				push [cannonX]
-				call drawBullet
+				je setBulletSpeed0
+					call clearBullet
+					sub [bulletY], 1
+					call drawBullet
+					mov [bulletSpeed], 1
+					jmp skipBulletUpdate
+				setBulletSpeed0:
+					mov [bulletSpeed], 0
 			skipBulletUpdate:
 			
 			
