@@ -25,9 +25,10 @@ DATASEG
 	
 	;Enemies Related
 	;------------------------------------------------
+	maxEnemyX dw 0
 	enemyClusterMovementCounter dw 0
 	enemyClusterMovementSpeed dw 200 ;the higher the slower
-	enemyClusterX dw 70
+	enemyClusterX dw 20
 	enemyClusterY dw 20
 	enemyClusterXDelta dw 5
 	enemyClusterYDelta dw 15
@@ -68,7 +69,6 @@ proc testRect
 	push 0
 	call drawRect
 endp
-
 
 proc Pixel ;paints the pixel
 	push bp
@@ -146,6 +146,68 @@ endp
 proc getKey ;getting a key from the user
 	mov ah, 00h
 	int 16h
+	ret
+endp
+
+proc maxOutOfEnemyArray
+	push ax
+	push si
+	
+	xor dx, dx
+	mov si, ax
+	maxOutOfEnemyArrayLoop:
+		mov ax, [si]
+		cmp ax, 0
+		je maxOutOfEnemyArrayEnd
+		
+		mov ax, [si + 4]
+		cmp ax, 4
+		jl maxOutOfEnemyArrayLoopEnd
+		
+		mov ax, [si]
+		cmp dx, ax
+		jg maxOutOfEnemyArrayLoopEnd
+		mov dx, ax
+		
+		maxOutOfEnemyArrayLoopEnd:
+			add si, 6
+			jmp maxOutOfEnemyArrayLoop
+		
+	maxOutOfEnemyArrayEnd:
+	mov [maxEnemyX], dx
+	pop si
+	pop ax
+	ret
+endp
+
+proc minOutOfEnemyArray
+	push ax
+	push si
+	
+	mov dx, 300
+	mov si, ax
+	minOutOfEnemyArrayLoop:
+		mov ax, [si]
+		cmp ax, 0
+		je minOutOfEnemyArrayEnd
+		
+		mov ax, [si + 4]
+		cmp ax, 4
+		jl minOutOfEnemyArrayLoopEnd
+		
+		mov ax, [si]
+		cmp dx, ax
+		jl minOutOfEnemyArrayLoopEnd
+		mov dx, ax
+		
+		minOutOfEnemyArrayLoopEnd:
+			add si, 6
+			jmp maxOutOfEnemyArrayLoop
+		
+	minOutOfEnemyArrayEnd:
+	mov [maxEnemyX], dx
+	pop si
+	pop ax
 	ret
 endp
 
@@ -395,7 +457,6 @@ proc collisionEnemies
 		collideEnemyDestroy:
 			mov ax, 3
 			mov [si + 4], ax
-			;call testRect
 			;play sound
 			;play animation
 			
@@ -469,6 +530,9 @@ start:
 			add [cannonX], ax
 			jmp calculatorLoop
 		KeyL:
+		
+		mov ax, offset enemiesArray
+		call maxOutOfEnemyArray
 		cmp [smokeInTheAir], 1
 		je calculatorLoop
 			call shoot
@@ -493,15 +557,18 @@ start:
 			mov ax, [enemyClusterMovementSpeed]
 			cmp [enemyClusterMovementCounter], ax ;counter for not moving the enemy every 1/1000 of a second
 			jle endOfEnemyBoundriesConnector 
-			mov bx, [enemyClusterY]
+				mov bx, [enemyClusterY]
 				mov cx, [enemyClusterX]
 				mov ax, offset enemiesArray
 				mov [blackOrWhite], 00h
 				call drawEnemies
 				cmp [enemyMoveDirection], 0
 				je leftSideboundry
-					cmp [enemyClusterX], 75 ;right side boundry
-					ja changeEnemyDirectionToLeft
+					mov ax, offset enemiesArray ;right side boundry
+					call maxOutOfEnemyArray
+					add dx, [enemyClusterX]
+					cmp dx, 300 
+					jg changeEnemyDirectionToLeft
 					mov ax, [enemyClusterX]
 					add ax, [enemyClusterXDelta]
 					mov [enemyClusterX], ax
@@ -509,8 +576,11 @@ start:
 					jmp endOfEnemyBoundries
 					
 				leftSideboundry:
-					cmp [enemyClusterX], 30
-					jb changeEnemyDirectionToRight
+					mov ax, offset enemiesArray
+					call minOutOfEnemyArray
+					add dx, [enemyClusterX]
+					cmp [enemyClusterX], 0
+					jl changeEnemyDirectionToRight
 					mov ax, [enemyClusterX]
 					sub ax, [enemyClusterXDelta]
 					mov [enemyClusterX], ax
