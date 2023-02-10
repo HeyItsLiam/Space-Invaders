@@ -4,7 +4,9 @@ STACK 100h
 
 DATASEG
 	testText db "Testing",10,".",10,".",10,"$"
-	;Cannon
+	testArray dw 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	
+	;cannon related
 	;------------------------------------------------
 	cannonX dw 9
 	cannonY dw 180
@@ -14,7 +16,17 @@ DATASEG
 	;------------------------------------------------
 	;Bullet
 	;------------------------------------------------
-	smokeInTheAir dw 0 ; 1 or 0 depends on if theres a cannon bullet is allready fired
+	fighterPose1 dw 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h,00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h,00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h,0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h,0Fh, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 00h,0Fh, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 0Fh, 00h,00h, 00h, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h, 00h, 00h
+	
+	;fighterPose1 dw  00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,
+	;			      00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h,
+	;			      00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h,
+	;			      00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h,
+	;			      0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h,
+	;			      0Fh, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 00h,
+	;			      0Fh, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 0Fh, 00h,
+	;			      00h, 00h, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h, 00h, 00h
+smokeInTheAir dw 0 ; 1 or 0 depends on if theres a cannon bullet is allready fired
 	startingPoint dw 15 ;half of cannonWidth
 	bulletHeight dw 8
 	bulletWidth dw 1
@@ -26,6 +38,7 @@ DATASEG
 	;Enemies Related
 	;------------------------------------------------
 	maxEnemyX dw 0
+	minEnemyX dw 0
 	enemyClusterMovementCounter dw 0
 	enemyClusterMovementSpeed dw 200 ;the higher the slower
 	enemyClusterX dw 20
@@ -133,6 +146,48 @@ proc drawRect ;a place holder until drawEnemySprite and drawCanonSprite
 	ret 10
 endp
 
+proc drawEnemySprite ;gets a specific array to draw a specific enemy
+	push si
+	push bp
+	mov bp, sp
+	mov si, bx
+	push ax
+	push cx
+	push dx
+
+	mov cx, [bp + 6] ;xpos
+	mov dx, [bp + 8] ;ypos
+	mov ax, cx
+	add ax, [enemyWidth]
+	mov bx, dx
+	add bx, [enemyHeight]
+	drawEnemySpriteLoop:
+		cmp dx, bx
+		jge drawEnemySpriteEnd
+		mov cx, ax
+		sub cx, [enemyWidth]
+		drawEnemySpriteLoopY:
+			cmp cx, ax
+			jge drawEnemySpriteIncY
+			push [si]
+			push dx
+			push cx
+			call Pixel
+			inc cx
+			add si, 2
+			jmp drawEnemySpriteLoopY
+		drawEnemySpriteIncY:
+			inc dx
+			jmp drawEnemySpriteLoop
+	drawEnemySpriteEnd:
+		pop dx
+		pop cx
+		pop ax
+		pop bp
+		pop si
+		ret
+endp
+
 proc clearCannon ;claears the canon so it will look like its moving
 	push [black]
 	push [cannonHeight]
@@ -174,7 +229,7 @@ proc maxOutOfEnemyArray
 			jmp maxOutOfEnemyArrayLoop
 		
 	maxOutOfEnemyArrayEnd:
-	mov [maxEnemyX], dx
+	;mov [maxEnemyX], dx
 	pop si
 	pop ax
 	ret
@@ -202,10 +257,10 @@ proc minOutOfEnemyArray
 		
 		minOutOfEnemyArrayLoopEnd:
 			add si, 6
-			jmp maxOutOfEnemyArrayLoop
+			jmp minOutOfEnemyArrayLoop
 		
 	minOutOfEnemyArrayEnd:
-	mov [maxEnemyX], dx
+	;mov [minEnemyX], dx
 	pop si
 	pop ax
 	ret
@@ -530,9 +585,10 @@ start:
 			add [cannonX], ax
 			jmp calculatorLoop
 		KeyL:
-		
-		mov ax, offset enemiesArray
-		call maxOutOfEnemyArray
+		mov bx, offset fighterPose1
+		push [cannonX]
+		push 13
+		call drawEnemySprite
 		cmp [smokeInTheAir], 1
 		je calculatorLoop
 			call shoot
@@ -579,7 +635,7 @@ start:
 					mov ax, offset enemiesArray
 					call minOutOfEnemyArray
 					add dx, [enemyClusterX]
-					cmp [enemyClusterX], 0
+					cmp dx, 10
 					jl changeEnemyDirectionToRight
 					mov ax, [enemyClusterX]
 					sub ax, [enemyClusterXDelta]
