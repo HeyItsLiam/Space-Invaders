@@ -16,17 +16,7 @@ DATASEG
 	;------------------------------------------------
 	;Bullet
 	;------------------------------------------------
-	fighterPose1 dw 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h,00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h,00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h,0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h,0Fh, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 00h,0Fh, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 0Fh, 00h,00h, 00h, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h, 00h, 00h
-	
-	;fighterPose1 dw  00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,
-	;			      00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h,
-	;			      00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h,
-	;			      00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h,
-	;			      0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h,
-	;			      0Fh, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 00h,
-	;			      0Fh, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 0Fh, 00h,
-	;			      00h, 00h, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h, 00h, 00h
-smokeInTheAir dw 0 ; 1 or 0 depends on if theres a cannon bullet is allready fired
+	smokeInTheAir dw 0 ; 1 or 0 depends on if theres a cannon bullet is allready fired
 	startingPoint dw 15 ;half of cannonWidth
 	bulletHeight dw 8
 	bulletWidth dw 1
@@ -37,10 +27,15 @@ smokeInTheAir dw 0 ; 1 or 0 depends on if theres a cannon bullet is allready fir
 	
 	;Enemies Related
 	;------------------------------------------------
+	enemyAnimationPose dw 0 ;controls the state of the animation of the enemy
+	offsetOfAnimation dw ?
 	maxEnemyX dw 0
 	minEnemyX dw 0
+	fighterPose1 dw 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h,00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h,00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h,0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h,0Fh, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 00h,0Fh, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 0Fh, 00h,00h, 00h, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h, 00h, 00h
+	fighterPose2 dw 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,0Fh, 00h, 00h, 0Fh, 00h, 00h, 00h, 0Fh, 00h, 00h, 0Fh, 00h,0Fh, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 00h,0Fh, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 0Fh, 00h,0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h,00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h,00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h
+	
 	enemyClusterMovementCounter dw 0
-	enemyClusterMovementSpeed dw 200 ;the higher the slower
+	enemyClusterMovementSpeed dw 500 ;the higher the slower
 	enemyClusterX dw 20
 	enemyClusterY dw 20
 	enemyClusterXDelta dw 5
@@ -81,6 +76,7 @@ proc testRect
 	push 0
 	push 0
 	call drawRect
+	ret
 endp
 
 proc Pixel ;paints the pixel
@@ -150,13 +146,14 @@ proc drawEnemySprite ;gets a specific array to draw a specific enemy
 	push si
 	push bp
 	mov bp, sp
-	mov si, bx
+	mov si, [bp + 6]
 	push ax
+	push bx
 	push cx
 	push dx
 
-	mov cx, [bp + 6] ;xpos
-	mov dx, [bp + 8] ;ypos
+	mov cx, [bp + 8] ;xpos
+	mov dx, [bp + 10] ;ypos
 	mov ax, cx
 	add ax, [enemyWidth]
 	mov bx, dx
@@ -182,10 +179,11 @@ proc drawEnemySprite ;gets a specific array to draw a specific enemy
 	drawEnemySpriteEnd:
 		pop dx
 		pop cx
+		pop bx
 		pop ax
 		pop bp
 		pop si
-		ret
+		ret 8
 endp
 
 proc clearCannon ;claears the canon so it will look like its moving
@@ -370,6 +368,60 @@ proc drawCannon
 	ret
 endp
 
+proc clearEnemies ;draws enemys from an array (they are bricks for now)
+	push ax
+	push si
+	
+	mov si, ax
+	clearEnemiesLoop:
+		mov ax, [si]
+		cmp ax, 0
+		je clearEnemiesEnd
+		
+		mov ax, [si + 4]
+		cmp ax, 0
+		je clearEnemiesNonpresent
+		cmp ax, 4
+		jl clearEnemiesKilled
+		push [black]
+		jmp clearEnemiesPresent
+		
+		clearEnemiesKilled:
+		push [black]
+		push [enemyHeight]
+		push[enemyWidth]
+		mov dx, [si + 2]
+		add dx, bx
+		push dx
+		mov dx, [si]
+		add dx, cx
+		push dx
+		call drawRect
+		jmp clearEnemiesContinue
+		
+		clearEnemiesNonpresent:
+		push [black]
+		
+		clearEnemiesPresent:
+		push [enemyHeight]
+		push [enemyWidth]
+		mov dx, [si + 2]
+		add dx, bx
+		push dx
+		mov dx, [si]
+		add dx, cx
+		push dx
+		call drawRect
+		
+		clearEnemiesContinue:
+		add si, 6
+		jmp clearEnemiesLoop
+	clearEnemiesEnd:
+	pop si
+	pop ax
+	ret
+endp
+
 proc drawEnemies ;draws enemys from an array (they are bricks for now)
 	push ax
 	push si
@@ -402,18 +454,18 @@ proc drawEnemies ;draws enemys from an array (they are bricks for now)
 		jmp drawEnemiesContinue
 		
 		drawEnemiesNonpresent:
-		push [black]
+		jmp drawEnemiesContinue
 		
 		drawEnemiesPresent:
-		push [enemyHeight]
-		push [enemyWidth]
 		mov dx, [si + 2]
 		add dx, bx
 		push dx
+		call findSuitableAnimation
 		mov dx, [si]
 		add dx, cx
 		push dx
-		call drawRect
+		push ax
+		call drawEnemySprite
 		
 		drawEnemiesContinue:
 		add si, 6
@@ -536,7 +588,45 @@ proc collisionEnemies
 		ret
 endp
 
-
+proc findSuitableAnimation
+	push bp
+	mov bp ,sp
+	
+	mov ax, [bp + 4]
+	sub ax, [enemyClusterY]
+	cmp ax, 3
+	je bomberAnimation
+	cmp ax, 19
+	je fighterAnimation
+	cmp ax, 35
+	je fighterAnimation
+	cmp ax, 51
+	je suicidalAnimation
+	cmp ax, 67
+	je suicidalAnimation
+	mov ax, offset fighterPose1
+	jmp findSuitableAnimationEnd
+	
+	bomberAnimation:
+	mov ax, 1
+	jmp findSuitableAnimationEnd
+	fighterAnimation:
+	cmp [enemyAnimationPose], 0
+	jne pushFighterPose2
+		mov ax, offset fighterPose1
+		jmp findSuitableAnimationEnd
+		
+	pushFighterPose2:
+		mov ax, offset fighterPose2
+		jmp findSuitableAnimationEnd
+	suicidalAnimation:
+	mov ax, 1
+	jmp findSuitableAnimationEnd
+	
+	findSuitableAnimationEnd:
+	pop bp 
+	ret
+endp
 
 
 
@@ -585,9 +675,10 @@ start:
 			add [cannonX], ax
 			jmp calculatorLoop
 		KeyL:
-		mov bx, offset fighterPose1
+		
 		push [cannonX]
 		push 13
+		push offset fighterPose2
 		call drawEnemySprite
 		cmp [smokeInTheAir], 1
 		je calculatorLoop
@@ -617,7 +708,7 @@ start:
 				mov cx, [enemyClusterX]
 				mov ax, offset enemiesArray
 				mov [blackOrWhite], 00h
-				call drawEnemies
+				call clearEnemies
 				cmp [enemyMoveDirection], 0
 				je leftSideboundry
 					mov ax, offset enemiesArray ;right side boundry
@@ -629,8 +720,17 @@ start:
 					add ax, [enemyClusterXDelta]
 					mov [enemyClusterX], ax
 					mov [enemyClusterMovementCounter], 1
+					cmp [enemyAnimationPose], 0
+					je incEnemyAnimationPoseRight
+					dec [enemyAnimationPose]
 					jmp endOfEnemyBoundries
-					
+					incEnemyAnimationPoseRight:
+					inc [enemyAnimationPose]
+					jmp endOfEnemyBoundries
+				
+				endOfEnemyBoundriesConnector:
+				jmp endOfEnemyBoundries
+				
 				leftSideboundry:
 					mov ax, offset enemiesArray
 					call minOutOfEnemyArray
@@ -641,10 +741,15 @@ start:
 					sub ax, [enemyClusterXDelta]
 					mov [enemyClusterX], ax
 					mov [enemyClusterMovementCounter], 0
+					cmp [enemyAnimationPose], 0
+					je incEnemyAnimationPoseLeft
+					dec [enemyAnimationPose]
+					jmp endOfEnemyBoundries
+					incEnemyAnimationPoseLeft:
+					inc [enemyAnimationPose]
 					jmp endOfEnemyBoundries
 					
-				endOfEnemyBoundriesConnector:
-				jmp endOfEnemyBoundries
+				
 					
 				changeEnemyDirectionToLeft:
 					mov ax, [enemyClusterY]
@@ -664,6 +769,9 @@ start:
 					
 			endOfEnemyBoundries:
 			add [enemyClusterMovementCounter], 1
+			
+			
+			sounds:
 			
 		drawLoop:
 			mov ax, offset enemiesArray
