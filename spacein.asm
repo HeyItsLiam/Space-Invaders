@@ -31,8 +31,6 @@ DATASEG
 	offsetOfAnimation dw ?
 	maxEnemyX dw 0
 	minEnemyX dw 0
-	fighterPose1 dw 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h,00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h,00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h,0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h,0Fh, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 00h,0Fh, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 0Fh, 00h,00h, 00h, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h, 00h, 00h
-	fighterPose2 dw 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,0Fh, 00h, 00h, 0Fh, 00h, 00h, 00h, 0Fh, 00h, 00h, 0Fh, 00h,0Fh, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 00h,0Fh, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 0Fh, 00h,0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h,00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h,00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h
 	
 	enemyClusterMovementCounter dw 0
 	enemyClusterMovementSpeed dw 500 ;the higher the slower
@@ -56,6 +54,15 @@ DATASEG
 	blackOrWhite dw 00h
 	;-------------------------------------------------
 	
+	;Sprites
+	;-------------------------------------------------
+	fighterPose1 dw 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h,00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h,00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h,0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h,0Fh, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 00h,0Fh, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 0Fh, 00h,00h, 00h, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h, 00h, 00h
+	fighterPose2 dw 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,0Fh, 00h, 00h, 0Fh, 00h, 00h, 00h, 0Fh, 00h, 00h, 0Fh, 00h,0Fh, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 00h,0Fh, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 0Fh, 00h,0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h,00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h,00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h
+	largeInvaderPose1 dw 00h, 00h, 00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h, 00h,00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h,0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh,0Fh, 0Fh, 0Fh, 00h, 00h, 0Fh, 0Fh, 00h, 00h, 0Fh, 0Fh, 0Fh,0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh,00h, 00h, 0Fh, 0Fh, 0Fh, 00h, 00h, 0Fh, 0Fh, 0Fh, 00h, 00h,00h, 0Fh, 0Fh, 00h, 00h, 0Fh, 0Fh, 00h, 00h, 0Fh, 0Fh, 00h,00h, 00h, 0Fh, 0Fh, 00h, 00h, 00h, 00h, 0Fh, 0Fh, 00h, 00h
+	largeInvaderPose2 dw 00h, 00h, 00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h, 00h,00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h,0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh,0Fh, 0Fh, 0Fh, 00h, 00h, 0Fh, 0Fh, 00h, 00h, 0Fh, 0Fh, 0Fh,0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh,00h, 00h, 00h, 0Fh, 0Fh, 00h, 00h, 0Fh, 0Fh, 00h, 00h, 00h,00h, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h,0Fh, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 0Fh, 0Fh
+	smallInvaderPose1 dw 00h, 00h, 00h, 00h, 00h, 0Fh, 0Fh, 00h, 00h, 00h, 00h, 00h,00h, 00h, 00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h, 00h,00h, 00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h,00h, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h,00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h,00h, 00h, 00h, 0Fh, 00h, 0Fh, 0Fh, 00h, 0Fh, 00h, 00h, 00h,00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h,00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h
+	smallInvaderPose2 dw 00h, 00h, 00h, 00h, 00h, 0Fh, 0Fh, 00h, 00h, 00h, 00h, 00h,00h, 00h, 00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h, 00h,00h, 00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h,00h, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h,00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h,00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h,00h, 00h, 00h, 0Fh, 00h, 0Fh, 0Fh, 00h, 0Fh, 00h, 00h, 00h,00h, 00h, 0Fh, 00h, 0Fh, 00h, 00h, 0Fh, 00h, 0Fh, 00h, 00h
+	;-------------------------------------------------
 	
 	
 CODESEG
@@ -166,10 +173,13 @@ proc drawEnemySprite ;gets a specific array to draw a specific enemy
 		drawEnemySpriteLoopY:
 			cmp cx, ax
 			jge drawEnemySpriteIncY
+			cmp [si], ch ;because ch is always 0
+			je drawEnemySpriteIncX
 			push [si]
 			push dx
 			push cx
 			call Pixel
+			drawEnemySpriteIncX:
 			inc cx
 			add si, 2
 			jmp drawEnemySpriteLoopY
@@ -608,8 +618,16 @@ proc findSuitableAnimation
 	jmp findSuitableAnimationEnd
 	
 	bomberAnimation:
-	mov ax, 1
+	cmp [enemyAnimationPose], 0
+	jne pushSmallInvaderPose2
+		mov ax, offset smallInvaderPose1
+		jmp findSuitableAnimationEnd
+		
+	pushSmallInvaderPose2:
+		mov ax, offset smallInvaderPose2
+		jmp findSuitableAnimationEnd
 	jmp findSuitableAnimationEnd
+	
 	fighterAnimation:
 	cmp [enemyAnimationPose], 0
 	jne pushFighterPose2
@@ -619,8 +637,16 @@ proc findSuitableAnimation
 	pushFighterPose2:
 		mov ax, offset fighterPose2
 		jmp findSuitableAnimationEnd
+	
 	suicidalAnimation:
-	mov ax, 1
+	cmp [enemyAnimationPose], 0
+	jne pushLargeInvaderPose2
+		mov ax, offset largeInvaderPose1
+		jmp findSuitableAnimationEnd
+		
+	pushLargeInvaderPose2:
+		mov ax, offset largeInvaderPose2
+		jmp findSuitableAnimationEnd
 	jmp findSuitableAnimationEnd
 	
 	findSuitableAnimationEnd:
@@ -675,11 +701,6 @@ start:
 			add [cannonX], ax
 			jmp calculatorLoop
 		KeyL:
-		
-		push [cannonX]
-		push 13
-		push offset fighterPose2
-		call drawEnemySprite
 		cmp [smokeInTheAir], 1
 		je calculatorLoop
 			call shoot
