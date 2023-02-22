@@ -8,18 +8,20 @@ DATASEG
 	
 	;cannon related
 	;------------------------------------------------
-	cannonX dw 9
+	lives dw 3
+	cannonX dw 144
 	cannonY dw 180
 	cannonSpeed dw 2
-	cannonHeight dw 6
-	cannonWidth dw 31
+	cannonHeight dw 8
+	cannonWidth dw 13
+	cannonAnimationPose dw 0
 	;------------------------------------------------
 	;Bullet
 	;------------------------------------------------
 	smokeInTheAir dw 0 ; 1 or 0 depends on if theres a cannon bullet is allready fired
-	startingPoint dw 15 ;half of cannonWidth
-	bulletHeight dw 8
-	bulletWidth dw 1
+	startingPoint dw 6 ;half of cannonWidth
+	bulletHeight dw 6
+	bulletWidth dw 0
 	bulletX dw 0
 	bulletY dw 0
 	bulletSpeed dw 1
@@ -27,24 +29,37 @@ DATASEG
 	
 	;Enemies Related
 	;------------------------------------------------
+	numOfEnemies dw 0
+	FireEveryN dw 500
 	enemyAnimationPose dw 0 ;controls the state of the animation of the enemy
 	offsetOfAnimation dw ?
 	maxEnemyX dw 0
 	minEnemyX dw 0
-	
+	enemyProjectile1X dw 0
+	enemyProjectile1Y dw 0
+	enemyProjectile2X dw 0
+	enemyProjectile2Y dw 0
+	enemyProjectile3X dw 0
+	enemyProjectile3Y dw 0
+	enemyProjectile1Speed dw 0
+	enemyProjectile2Speed dw 0
+	enemyProjectile3Speed dw  0
+	pickle1 dw 0 ;used to determine if the enemies shot a projectile
+	pickle2 dw 0
+	pickle3 dw 0
+	LOCKED dw 0
 	enemyClusterMovementCounter dw 0
-	enemyClusterMovementSpeed dw 500 ;the higher the slower
+	enemyClusterMovementSpeed dw 1000 ;the higher the slower
 	enemyClusterX dw 20
 	enemyClusterY dw 20
 	enemyClusterXDelta dw 5
-	enemyClusterYDelta dw 15
+	enemyClusterYDelta dw 8
 	enemyHeight dw 8
 	enemyWidth dw 12
 	enemyHeightPlus dw 10
 	enemyWidthPlus dw 14
 	enemyMoveDirection dw 1 ;1 = right 0 = left
-	enemiesArray dw 1,3,4,19,3,4,37,3,4,55,3,4,73,3,4,91,3,4,109,3,4,127,3,4,145,3,4,163,3,4,181,3,4,199,3,4,217,3,4,1,19,4,19,19,4,37,19,4,55,19,4,73,19,4,91,19,4,109,19,4,127,19,4,145,19,4,163,19,4,181,19,4,199,19,4,217,19,4,1,35,4,19,35,4,37,35,4,55,35,4,73,35,4,91,35,4,109,35,4,127,35,4,145,35,4,163,35,4,181,35,4,199,35,4,217,35,4,1,51,4,19,51,4,37,51,4,55,51,4,73,51,4,91,51,4,109,51,4,127,51,4,145,51,4,163,51,4,181,51,4,199,51,4,217,51,4,1,67,4,19,67,4,37,67,4,55,67,4,73,67,4,91,67,4,109,67,4,127,67,4,145,67,4,163,67,4,181,67,4,199,67,4,217,67,4,0
-
+	enemiesArray dw 1,3,4,16,3,4,31,3,4,46,3,4,61,3,4,76,3,4,91,3,4,106,3,4,121,3,4,136,3,4,151,3,4,166,3,4,181,3,4,196,3,4,211,3,4,1,19,4,16,19,4,31,19,4,46,19,4,61,19,4,76,19,4,91,19,4,106,19,4,121,19,4,136,19,4,151,19,4,166,19,4,181,19,4,196,19,4,211,19,4,1,35,4,16,35,4,31,35,4,46,35,4,61,35,4,76,35,4,91,35,4,106,35,4,121,35,4,136,35,4,151,35,4,166,35,4,181,35,4,196,35,4,211,35,4,1,51,4,16,51,4,31,51,4,46,51,4,61,51,4,76,51,4,91,51,4,106,51,4,121,51,4,136,51,4,151,51,4,166,51,4,181,51,4,196,51,4,211,51,4,1,67,4,16,67,4,31,67,4,46,67,4,61,67,4,76,67,4,91,67,4,106,67,4,121,67,4,136,67,4,151,67,4,166,67,4,181,67,4,196,67,4,211,67,4,0
 	;------------------------------------------------
 	
 	;Colors
@@ -62,8 +77,43 @@ DATASEG
 	largeInvaderPose2 dw 00h, 00h, 00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h, 00h,00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h,0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh,0Fh, 0Fh, 0Fh, 00h, 00h, 0Fh, 0Fh, 00h, 00h, 0Fh, 0Fh, 0Fh,0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh,00h, 00h, 00h, 0Fh, 0Fh, 00h, 00h, 0Fh, 0Fh, 00h, 00h, 00h,00h, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h,0Fh, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 0Fh, 0Fh
 	smallInvaderPose1 dw 00h, 00h, 00h, 00h, 00h, 0Fh, 0Fh, 00h, 00h, 00h, 00h, 00h,00h, 00h, 00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h, 00h,00h, 00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h,00h, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h,00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h,00h, 00h, 00h, 0Fh, 00h, 0Fh, 0Fh, 00h, 0Fh, 00h, 00h, 00h,00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h,00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h
 	smallInvaderPose2 dw 00h, 00h, 00h, 00h, 00h, 0Fh, 0Fh, 00h, 00h, 00h, 00h, 00h,00h, 00h, 00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h, 00h,00h, 00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h, 00h,00h, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 0Fh, 0Fh, 00h, 00h,00h, 00h, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 0Fh, 00h, 00h,00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h,00h, 00h, 00h, 0Fh, 00h, 0Fh, 0Fh, 00h, 0Fh, 00h, 00h, 00h,00h, 00h, 0Fh, 00h, 0Fh, 00h, 00h, 0Fh, 00h, 0Fh, 00h, 00h
+	cannonSprite dw 00h, 00h, 00h, 00h, 00h, 00h, 0Ah, 00h, 00h, 00h, 00h, 00h, 00h,00h, 00h, 00h, 00h, 00h, 0Ah, 0Ah, 0Ah, 00h, 00h, 00h, 00h, 00h,00h, 00h, 00h, 00h, 00h, 0Ah, 0Ah, 0Ah, 00h, 00h, 00h, 00h, 00h,00h, 00h, 00h, 00h, 00h, 0Ah, 0Ah, 0Ah, 00h, 00h, 00h, 00h, 00h,00h, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 00h,0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah,0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah,0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah,0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah
+	bombSprite dw 04h, 04h, 04h, 04h, 04h, 04h, 04h, 04h, 04h, 04h, 04h, 04h, 04h, 04h, 04h
+	enemyExplosion dw 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h,00h, 00h, 0Fh, 00h, 00h, 0Fh, 00h, 00h, 0Fh, 00h, 00h, 0Fh,00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 0Fh, 00h, 0Fh, 00h,0Fh, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h,00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 0Fh, 0Fh,00h, 0Fh, 00h, 0Fh, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,0Fh, 00h, 00h, 0Fh, 00h, 00h, 0Fh, 00h, 00h, 0Fh, 00h, 00h,00h, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h
+	cannonSpriteDestroyed1 dw 00h, 00h, 00h, 0Ah, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h,00h, 0Ah, 00h, 00h, 00h, 00h, 0Ah, 00h, 00h, 0Ah, 00h, 00h, 00h,00h, 00h, 00h, 0Ah, 00h, 0Ah, 00h, 00h, 0Ah, 00h, 0Ah, 00h, 00h,00h, 0Ah, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 0Ah, 00h,00h, 00h, 00h, 00h, 0Ah, 00h, 0Ah, 0Ah, 00h, 00h, 00h, 00h, 00h,0Ah, 00h, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 00h, 00h, 00h,00h, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 00h, 00h,0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 00h
+	cannonSpriteDestroyed2 dw 00h, 00h, 00h, 00h, 00h, 00h, 0Ah, 00h, 00h, 00h, 00h, 0Ah, 00h,0Ah, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h,00h, 00h, 00h, 0Ah, 00h, 00h, 0Ah, 00h, 00h, 00h, 00h, 0Ah, 00h,00h, 0Ah, 00h, 00h, 00h, 0Ah, 00h, 00h, 00h, 0Ah, 00h, 00h, 0Ah,00h, 00h, 00h, 00h, 0Ah, 0Ah, 00h, 0Ah, 00h, 00h, 00h, 00h, 00h,0Ah, 00h, 00h, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 00h, 00h, 0Ah, 00h,00h, 00h, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 00h, 00h, 00h,0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 00h
+	enemyProjectileSprite dw 00h, 0Fh, 00h,00h, 00h, 0Fh,00h, 0Fh, 00h,0Fh,  00h,00h, 00h, 0Fh
+
+	drawBackground dw 1
 	;-------------------------------------------------
 	
+	;randomness related
+	;-------------------------------------------------
+	loopDeterminator dw 0
+	randomEnemy dw 0
+	randomNumber dw 0
+	randomnessCounter dw 0
+	oldTime db 0
+	;-------------------------------------------------
+	
+	;texts
+	;-------------------------------------------------
+	starting_screen_text db "SPACE INVADERS", 10,10, "Your goal is to defend your Mothership", 10, 10 , "from the enemy , move your cannon with", 10, 10 , "the A and D keys, and shoot the enemies", 10, 10 , "using the L key. If the enemies have", 10, 10 , "reached the bottom or you died 3 times,", 10, 10 , "you'll lose the game!", 10, 10,10, "Made by Liam Ichai", 10,10,10, "- Press a key to start the game -$"
+	WinnerText db "Winner WInner, Chicken Dinner", 10, 10, "Great job at destroying all those", 10, 10 , "enemies!", 10, 10 , "Go do homework instead of playing Games", 10, 10 , ":/$"
+	LoserText db "You Lost!", 10, 10 , "Your lacking some.... skill  :/$"
+	scoreText db "Score: "
+	;-------------------------------------------------
+	
+	;Notes
+	;-------------------------------------------------
+	noteStep dw 0
+	noteC2 dw 16000
+	shootNote dw 800
+	note1 dw 20000
+	note2 dw 20500
+	note3 dw 21000
+	note4 dw 21500
+	;-------------------------------------------------
 	
 CODESEG
 
@@ -101,13 +151,96 @@ proc Pixel ;paints the pixel
 	mov al, [bp + 8]
 	int 10h
 	
-	
 	pop dx
 	pop cx
 	pop bx
 	pop ax
 	pop bp
 	ret 6
+endp
+
+proc readPixel
+	push bp
+	mov bp, sp
+	push bx
+	push cx
+	push dx
+	
+	mov ah, 0Dh
+	mov bh, 0
+	mov cx, [bp + 4]
+	mov dx, [bp + 6]
+	int 10h
+	
+	
+	pop dx
+	pop cx
+	pop bx
+	pop bp
+	ret 4
+endp
+
+proc beep
+	push bp
+	mov bp, sp
+	push ax
+	push bx
+	push cx
+	
+	in  al, 61h
+	or al, 00000011b
+	out 61h, al
+	
+	mov al, 0B6h
+	out 43h, al
+	
+	mov ax, [bp + 4]
+	out 42h, al
+	mov al, ah
+	out 42h, al
+	
+	pause1:
+		mov cx, 65535
+	pause2:
+		dec cx
+		cmp cx, 0
+		jne pause2
+		dec bx
+		cmp bx, 0
+		jne pause1
+		in al, 61h
+		
+		and al , 11111100b
+		out 61h, al
+	
+	pop cx
+	pop bx
+	pop ax
+	pop bp
+	ret 2
+endp
+
+proc stopBeep
+	push ax
+	
+	in al, 61h
+	and al, 11111100b
+	out 61h, al
+	
+	pop ax
+	ret
+endp
+
+proc waitTenth
+	push ax
+	xor ax, ax
+	waitTenthLoop:
+	inc ax
+	cmp ax, 32000
+	jl waitTenthLoop
+
+	pop ax
+	ret
 endp
 
 proc drawRect ;a place holder until drawEnemySprite and drawCanonSprite
@@ -149,6 +282,72 @@ proc drawRect ;a place holder until drawEnemySprite and drawCanonSprite
 	ret 10
 endp
 
+proc drawBasicBackground
+	push 0Ah		;top green line cant draw more then width 100 so it is split into 3 segments
+	push 0
+	push 110
+	push 20
+	push 0
+	call drawRect
+	push 0Ah
+	push 0
+	push 110
+	push 20
+	push 110
+	call drawRect
+	push 0Ah
+	push 0
+	push 99
+	push 20
+	push 220
+	call drawRect
+	
+	push 0Ah		;bottom green line cant draw more then width 100 so it is split into 3 segments
+	push 0
+	push 110
+	push 199
+	push 0
+	call drawRect
+	push 0Ah
+	push 0
+	push 110
+	push 199
+	push 110
+	call drawRect
+	push 0Ah
+	push 0
+	push 99
+	push 199
+	push 220
+	call drawRect
+	
+	
+	mov [cannonX], 200
+	mov [cannonY], 5
+	push offset cannonSprite
+	call drawCannon
+	
+	cmp [lives], 2
+	jl drawBasicBackgroundEnd
+	mov [cannonX], 220
+	mov [cannonY], 5
+	push offset cannonSprite
+	call drawCannon
+	
+	cmp [lives], 3
+	jl drawBasicBackgroundEnd
+	mov [cannonX], 240
+	mov [cannonY], 5
+	push offset cannonSprite
+	call drawCannon
+	
+	
+	drawBasicBackgroundEnd:
+	mov [cannonX], 150
+	mov [cannonY], 180
+	ret
+endp
+
 proc drawEnemySprite ;gets a specific array to draw a specific enemy
 	push si
 	push bp
@@ -173,8 +372,11 @@ proc drawEnemySprite ;gets a specific array to draw a specific enemy
 		drawEnemySpriteLoopY:
 			cmp cx, ax
 			jge drawEnemySpriteIncY
+			cmp [drawBackground], 1
+			je drawEnemySpriteDrawPixel
 			cmp [si], ch ;because ch is always 0
 			je drawEnemySpriteIncX
+			drawEnemySpriteDrawPixel:
 			push [si]
 			push dx
 			push cx
@@ -194,6 +396,170 @@ proc drawEnemySprite ;gets a specific array to draw a specific enemy
 		pop bp
 		pop si
 		ret 8
+endp
+
+proc drawCannon
+	push si
+	push bp
+	mov bp, sp
+	mov si, [bp + 6]
+	push ax
+	push bx
+	push cx
+	push dx
+
+	mov cx, [cannonX] ;xpos
+	mov dx, [cannonY] ;ypos
+	mov ax, cx
+	add ax, [cannonWidth]
+	mov bx, dx
+	add bx, [cannonHeight]
+	drawCannonSpriteLoop:
+		cmp dx, bx
+		jge drawCannonSpriteEnd
+		mov cx, ax
+		sub cx, [cannonWidth]
+		drawCannonSpriteLoopY:
+			cmp cx, ax
+			jge drawCannonSpriteIncY
+			cmp [si], ch ;because ch is always 0
+			je drawCannonSpriteIncX
+			push [si]
+			push dx
+			push cx
+			call Pixel
+			drawCannonSpriteIncX:
+			inc cx
+			add si, 2
+			jmp drawCannonSpriteLoopY
+		drawCannonSpriteIncY:
+			inc dx
+			jmp drawCannonSpriteLoop
+	drawCannonSpriteEnd:
+		pop dx
+		pop cx
+		pop bx
+		pop ax
+		pop bp
+		pop si
+		ret 2
+endp
+
+proc drawBomb ;requires diffrent functions
+	push si
+	push bp
+	mov bp, sp
+	mov si, offset enemyProjectileSprite
+	push ax
+	push bx
+	push cx
+	push dx
+
+	mov cx, [bp + 6] ;xpos
+	mov dx, [bp + 8] ;ypos
+	mov ax, cx
+	add ax, 3
+	mov bx, dx
+	add bx, 5
+	drawBombSpriteLoop:
+		cmp dx, bx
+		jge drawBombSpriteEnd
+		mov cx, ax
+		sub cx, 3
+		drawBombSpriteLoopY:
+			cmp cx, ax
+			jge drawBombSpriteIncY
+			;push dx
+			;push cx
+			;call readPixel
+			;cmp al, 00h
+			;jne drawBombSpriteIncX
+				cmp [si], ch ;because ch is always 0
+				je drawBombSpriteIncX
+					push [si]
+					push dx
+					push cx
+					call Pixel
+				drawBombSpriteIncX:
+				inc cx
+				add si, 2
+				jmp drawBombSpriteLoopY
+		drawBombSpriteIncY:
+			inc dx
+			jmp drawBombSpriteLoop
+	drawBombSpriteEnd:
+		pop dx
+		pop cx
+		pop bx
+		pop ax
+		pop bp
+		pop si
+		ret 8
+endp
+
+proc clearBomb ;requires diffrent functions
+	push si
+	push bp
+	mov bp, sp
+	mov si, offset bombSprite
+	push ax
+	push bx
+	push cx
+	push dx
+
+	mov cx, [bp + 6] ;xpos
+	mov dx, [bp + 8] ;ypos
+	mov ax, cx
+	add ax, 3
+	mov bx, dx
+	add bx, 4
+	clearBombSpriteLoop:
+		cmp dx, bx
+		jge clearBombSpriteEnd
+		mov cx, ax
+		sub cx, 4
+		clearBombSpriteLoopY:
+			cmp cx, ax
+			jge clearBombSpriteIncY
+			;push dx
+			;push cx
+			;call readPixel
+			;cmp al, 00h
+			;jne drawBombSpriteIncX
+					push 00h
+					push dx
+					push cx
+					call Pixel
+				clearBombSpriteIncX:
+				inc cx
+				add si, 2
+				jmp clearBombSpriteLoopY
+		clearBombSpriteIncY:
+			inc dx
+			jmp clearBombSpriteLoop
+	clearBombSpriteEnd:
+		pop dx
+		pop cx
+		pop bx
+		pop ax
+		pop bp
+		pop si
+		ret 8
+endp
+
+proc printText
+	push bp
+	mov bp, sp
+	
+	mov dx, [bp + 4]
+	mov ah, 09h
+	int 21h
+	
+	mov ah, 00h
+	int 16h
+	
+	pop bp
+	ret
 endp
 
 proc clearCannon ;claears the canon so it will look like its moving
@@ -235,9 +601,7 @@ proc maxOutOfEnemyArray
 		maxOutOfEnemyArrayLoopEnd:
 			add si, 6
 			jmp maxOutOfEnemyArrayLoop
-		
 	maxOutOfEnemyArrayEnd:
-	;mov [maxEnemyX], dx
 	pop si
 	pop ax
 	ret
@@ -266,10 +630,86 @@ proc minOutOfEnemyArray
 		minOutOfEnemyArrayLoopEnd:
 			add si, 6
 			jmp minOutOfEnemyArrayLoop
-		
 	minOutOfEnemyArrayEnd:
-	;mov [minEnemyX], dx
 	pop si
+	pop ax
+	ret
+endp
+
+proc maxYOutOfEnemyArray
+	push ax
+	push si
+	
+	mov dx, 0
+	mov si, ax
+	maxYOutOfEnemyArrayLoop:
+		mov ax, [si]
+		cmp ax, 0
+		je maxYOutOfEnemyArrayEnd
+		
+		mov ax, [si + 4]
+		cmp ax, 4
+		jl maxYOutOfEnemyArrayLoopEnd
+		
+		mov ax, [si + 2]
+		cmp dx, ax
+		jg maxYOutOfEnemyArrayLoopEnd
+		mov dx, ax
+		
+		maxYOutOfEnemyArrayLoopEnd:
+			add si, 6
+			jmp maxYOutOfEnemyArrayLoop
+	maxYOutOfEnemyArrayEnd:
+	pop si
+	pop ax
+	ret
+endp
+
+proc countRemainingEnemies
+	push ax
+	push si
+	
+	mov [numOfEnemies], 0
+	mov si, ax
+	countRemainingEnemiesLoop:
+		mov ax, [si]
+		cmp ax, 0
+		je countRemainingEnemiesEnd
+		
+		mov ax, [si + 4]
+		cmp ax, 4
+		jl countRemainingEnemiesLoopEnd
+		inc [numOfEnemies]
+		
+		
+		countRemainingEnemiesLoopEnd:
+			add si, 6
+			jmp countRemainingEnemiesLoop
+	countRemainingEnemiesEnd:
+	pop si
+	pop ax
+	ret
+endp
+
+proc randomNum
+	push ax
+	push cx
+	push dx
+	
+	mov ah, 2Ch
+	int 21h
+	mov dh, 0
+	cmp [randomNumber], dx
+	je theRandomNumbersAreEqual
+	mov [randomNumber], dx
+	jmp endOfRandomNum
+	theRandomNumbersAreEqual:
+	add dl, 30   ;to fix the option of the clock not moving
+	mov [randomNumber], dx
+	
+	endOfRandomNum:
+	pop dx
+	pop cx
 	pop ax
 	ret
 endp
@@ -297,29 +737,18 @@ proc decreaseToZero
 	ret 2
 endp
 
-
-proc waits ;waits for maximum 81 seconds
-	pop dx
-	
-	mov ah, 86
-	xor cx, cx
-	int 15h
-	
+proc clearScreen
+	call graphicMode
+	ret
 endp
-	
+
 proc clearBullet
-	push bp
-	mov bp, sp
-	push ax
-	
 	push [black]
 	push [bulletHeight]
 	push [bulletWidth]
 	push [BulletY]
 	push [bulletX]
 	call drawRect
-	pop ax
-	pop bp
 	ret
 endp
 
@@ -345,6 +774,29 @@ proc shoot
 	ret
 endp
 
+proc waits
+	push ax
+	push cx
+	push dx
+	
+	mov ah, 2Ch
+	int 21h
+	mov [oldTime], dl
+	
+	waitsLoop:
+	mov ah, 2Ch
+	int 21h
+	cmp dl, [oldTime]
+	je waitsLoop
+	jmp waitsEnd
+	
+	waitsEnd:
+	pop dx
+	pop cx
+	pop ax
+	ret
+endp 
+
 proc drawBullet ;gets x and y and draws a bullet
 	push bp
 	mov bp, sp
@@ -361,20 +813,76 @@ proc drawBullet ;gets x and y and draws a bullet
 	ret
 endp
 
+proc shootEnemyProjectile1
+	push si
+	mov si, ax
+	
+	
+	call randomNum
+	call chooseRandomEnemy
+	mov ax, 0
+	cmp [enemyProjectile1X], ax
+	jne endOfShootEnemyProjectile1
+	cmp [enemyProjectile1Y], ax
+	jne endOfShootEnemyProjectile1
+	add si, [randomEnemy]
+	mov ax, 67
+	cmp [si + 2], ax                         ;to avoid suiciders shooting
+	je endOfShootEnemyProjectile1
+	mov ax, 51
+	cmp [si + 2], ax
+	je endOfShootEnemyProjectile1
+	mov ax, 4
+	cmp [si + 4], ax
+	jl endOfShootEnemyProjectile1
+	mov ax, [si]
+	add ax, 6 ; half of enemyWidth
+	add ax, [enemyClusterX]
+	mov [enemyProjectile1X], ax
+	mov ax, [si + 2]
+	add ax, 8 ;enemyHeight
+	add ax, [enemyClusterY]
+	mov [enemyProjectile1Y], ax
+	mov [pickle1], 1
+	
+	endOfShootEnemyProjectile1:
+	pop si
+	ret
+endp
+
+proc chooseRandomEnemy ;chooses random enemy from the alive ones
+	push  ax
+	push dx
+	
+	call randomNum
+	mov ax, [randomNumber]
+	mov dl, 6
+	mul dl
+	inc ax
+	
+	reductionLoop:
+	cmp ax, 390
+	jle endOfChooseRandomEnemy
+	sub ax, 390
+	jmp reductionLoop
+	
+	endOfChooseRandomEnemy:
+	xor dx, dx
+	inc ax
+	mov bx, 6
+	div bx
+	mov dx, 6
+	mul dx
+	mov [randomEnemy], ax
+	
+	pop dx
+	pop ax
+	ret
+endp 
 
 proc isKeyPressed ;checking if key is pressed(gets state of keyboard buffer)
 	mov ah, 01h
 	int 16h
-	ret
-endp
-
-proc drawCannon
-	push [white]
-	push [cannonHeight]
-	push [cannonWidth]
-	push [cannonY]
-	push [cannonX]
-	call drawRect
 	ret
 endp
 
@@ -432,6 +940,54 @@ proc clearEnemies ;draws enemys from an array (they are bricks for now)
 	ret
 endp
 
+proc cannonExplosion
+	push ax
+	push bx
+	
+	mov ax, 0
+	xor bx, bx
+	
+	call clearScreen
+	call clearCannon
+	destructionLoop:
+	cmp ax, 30
+	je destroyCannonEnd
+		changeAnimationLoop:
+		cmp bx, 32000
+		je changeAnimation
+		inc bx
+		jmp changeAnimationLoop
+		
+		changeAnimation:
+		call waits
+		call clearCannon
+		cmp [cannonAnimationPose], 1
+		je changeAnimationTrue
+		push offset cannonSpriteDestroyed2
+		call drawCannon
+		mov [cannonAnimationPose], 1
+		xor bx, bx
+		inc ax
+		
+		jmp destructionLoop
+		
+		changeAnimationTrue:
+		call waits
+		call clearCannon
+		push offset cannonSpriteDestroyed1
+		call drawCannon
+		mov [cannonAnimationPose], 0
+		xor bx, bx
+		inc ax
+		jmp destructionLoop
+	destroyCannonEnd:
+	call clearCannon
+	mov [pickle1], 0
+	pop bx
+	pop ax
+	ret
+endp
+
 proc drawEnemies ;draws enemys from an array (they are bricks for now)
 	push ax
 	push si
@@ -451,16 +1007,16 @@ proc drawEnemies ;draws enemys from an array (they are bricks for now)
 		jmp drawEnemiesPresent
 		
 		drawEnemiesKilled:
-		push [black]
-		push [enemyHeight]
-		push[enemyWidth]
-		mov dx, [si + 2]
-		add dx, bx
-		push dx
-		mov dx, [si]
-		add dx, cx
-		push dx
-		call drawRect
+		;push [black]
+		;push [enemyHeight]
+		;push[enemyWidth]
+		;mov dx, [si + 2]
+		;add dx, bx
+		;push dx
+		;mov dx, [si]
+		;add dx, cx
+		;push dx
+		;call drawRect
 		jmp drawEnemiesContinue
 		
 		drawEnemiesNonpresent:
@@ -484,6 +1040,55 @@ proc drawEnemies ;draws enemys from an array (they are bricks for now)
 	pop si
 	pop ax
 	ret
+endp
+
+proc bombCollision
+	push bp
+	mov bp, si
+	push ax
+	push bx
+	push cx
+	
+	cmp [pickle1], 1
+	jne checkPickle2Collision
+	mov ax, [enemyProjectile1Y]
+	cmp [cannonY], ax
+	jne checkPickle2Collision
+		inc ax ;ypos
+		mov bx, [enemyProjectile1X] ; xpos
+		mov cx, bx
+		add cx, 3 ;max xpos
+		targetSpottingPickle1:
+			cmp bx, cx
+			jg checkPickle2Collision
+			mov ax, bx
+			sub ax, [cannonX]
+			cmp ax, [cannonWidth]
+			jg notLocking
+			cmp ax, 0
+			jl notLocking
+			call clearScreen
+			call cannonExplosion
+			mov [pickle1], 0
+			mov [enemyProjectile1X], 0
+			mov [enemyProjectile1Y], 0
+			mov [FireEveryN], 0
+			dec [lives]
+			call drawBasicBackground
+			inc bx
+			jmp bombCollisionEnd
+			notLocking:
+			inc bx
+			
+			jmp targetSpottingPickle1
+		checkPickle2Collision:
+		
+		
+		bombCollisionEnd:
+	pop cx
+	pop bx
+	pop ax
+	pop bp
 endp
 
 proc collisionField
@@ -574,9 +1179,20 @@ proc collisionEnemies
 		collideEnemyDestroy:
 			mov ax, 3
 			mov [si + 4], ax
-			;play sound
-			;play animation
 			
+			push 50 ;drawEnemySprite bugs out, fix by pushing a random insignificant number
+			mov ax, [si + 2]
+			add ax, [enemyClusterY]
+			push ax
+			mov ax, [si]
+			add ax, [enemyClusterX]
+			push ax
+			push offset enemyExplosion
+			call drawEnemySprite	
+			push [noteC2]
+			call beep
+			call waitTenth
+			call stopBeep
 			mov [smokeInTheAir], 0 ;eliminates the bullet
 			call clearBullet
 			mov [bulletX], 0
@@ -595,7 +1211,45 @@ proc collisionEnemies
 	collideEnemiesEnd:
 		pop si
 		pop ax
-		ret
+		ret 4
+endp
+
+proc findSuitableSound
+	cmp [noteStep], 0
+	je playNote1
+	cmp [noteStep], 1
+	je playNote2
+	cmp [noteStep], 2
+	je playNote3
+	cmp [noteStep], 3
+	je playNote4
+	
+	playNote1:
+	push [note1]
+	call beep
+	inc [noteStep]
+	jmp findSuitableSoundEnd
+	
+	playNote2:
+	push [note2]
+	call beep
+	inc [noteStep]
+	jmp findSuitableSoundEnd
+	
+	playNote3:
+	push [note3]
+	call beep
+	inc [noteStep]
+	jmp findSuitableSoundEnd
+	
+	playNote4:
+	push [note4]
+	call beep
+	mov [noteStep], 0
+	jmp findSuitableSoundEnd
+	
+	findSuitableSoundEnd:
+	ret
 endp
 
 proc findSuitableAnimation
@@ -654,7 +1308,36 @@ proc findSuitableAnimation
 	ret
 endp
 
+proc resetEnemiesArray
+	push si
+	push ax
+	mov si, offset enemiesArray
+	
+	resetEnemiesArrayLoop:
+	mov ax, 0
+	cmp [si], ax
+	je resetEnemiesArrayEnd
+	mov ax, 4
+	mov [si + 4], ax
+	add si, 6
+	jmp resetEnemiesArrayLoop
+	
+	resetEnemiesArrayEnd:
+	pop ax
+	pop si
+	ret
+endp 
 
+proc resetRound
+	call clearScreen
+	mov [pickle1], 0
+	mov [smokeInTheAir], 0
+	mov [enemyClusterX], 20
+	mov [enemyClusterY], 20
+	mov [cannonX], 144
+	call resetEnemiesArray
+	ret
+endp 
 
 
 
@@ -666,9 +1349,13 @@ start:
 	mov ds, ax
 	
 	call graphicMode
+	push offset starting_screen_text
+	call printText
+	call graphicMode
 	
+	
+	call drawBasicBackground
 	mainLoop:
-	
 		call isKeyPressed
 		jz calculatorLoopConnector
 		call clearCannon
@@ -695,7 +1382,7 @@ start:
 			sub [cannonX], ax
 			jmp calculatorLoop
 		KeyD:
-			cmp [cannonX], 260
+			cmp [cannonX], 305
 			jg calculatorLoop
 			mov ax, [cannonSpeed]
 			add [cannonX], ax
@@ -704,17 +1391,22 @@ start:
 		cmp [smokeInTheAir], 1
 		je calculatorLoop
 			call shoot
+			push [shootNote]
+			call beep
 			jmp calculatorLoop
 		KeyP:
+			
+			;call resetRound
 			jmp exit
 		;-------------------------------------------
 		
 		
 		
 		calculatorLoop:
+			bulletUpdate:
 			cmp [smokeInTheAir], 1
 			jne enemyBoundries
-				cmp [bulletY], 0
+				cmp [bulletY], 21
 				jg enemyBoundries
 				mov [smokeInTheAir], 0
 				push [bulletY]
@@ -747,6 +1439,7 @@ start:
 					jmp endOfEnemyBoundries
 					incEnemyAnimationPoseRight:
 					inc [enemyAnimationPose]
+					
 					jmp endOfEnemyBoundries
 				
 				endOfEnemyBoundriesConnector:
@@ -793,36 +1486,111 @@ start:
 			
 			
 			sounds:
+			;mov ah, 2Ch
+			;int 21h
+			;cmp dh, [oldTime]
+			;je soundsContinue
+			;mov [oldTime], dh
+			;call stopBeep
+			
+			soundsContinue:
+			
+			pickle1Check:
+			cmp [pickle1], 1
+			jne pickle2Check
+				cmp [enemyProjectile1Y], 195
+					jle pickle2Check
+					mov [pickle1], 0
+					push [enemyProjectile1Y]
+					push [enemyProjectile1X]
+					call clearBomb
+					mov [enemyProjectile1X], 0
+					mov [enemyProjectile1Y], 0
+					
+			pickle2Check:
+			mov ax, [FireEveryN]
+			cmp ax, 500
+			jle enemyHoldFire
+			mov ax, offset enemiesArray
+			call shootEnemyProjectile1
+			mov [FireEveryN], 0
+			
+			enemyHoldFire:
+			inc [FireEveryN]
 			
 		drawLoop:
+			mov [drawBackground], 1
 			mov ax, offset enemiesArray
 			call collisionEnemies
+			mov [drawBackground], 0
 			mov bx, [enemyClusterY]
 			mov cx, [enemyClusterX]
 			mov ax, offset enemiesArray
 			mov [blackOrWhite], 0Fh
 			call drawEnemies
-
+			
+			push offset cannonSprite
 			call drawCannon
 			
 			cmp [smokeInTheAir], 1
 			jne skipBulletUpdate
-				cmp [bulletSpeed], 1
+				cmp [bulletSpeed], 5
 				je setBulletSpeed0
+					inc [bulletSpeed]
+					jmp skipBulletUpdate
+				setBulletSpeed0:
 					call clearBullet
 					sub [bulletY], 1
 					call drawBullet
-					mov [bulletSpeed], 1
-					jmp skipBulletUpdate
-				setBulletSpeed0:
 					mov [bulletSpeed], 0
 			skipBulletUpdate:
 			
+			cmp [pickle1], 1
+			jne skipPickle1Update
+			cmp [enemyProjectile1Speed], 10
+				je setEnemyProjectile1Speed0
+					inc [enemyProjectile1Speed]
+					jmp skipPickle1Update
+					setEnemyProjectile1Speed0:
+					push [enemyProjectile1Y]
+					push [enemyProjectile1X]
+					call clearBomb
+					inc [enemyProjectile1Y]
+					push [enemyProjectile1Y]
+					push [enemyProjectile1X]
+					call drawBomb
+					mov [enemyProjectile1Speed], 0
+			skipPickle1Update:
 			
+			cmp [lives], 0
+			jne checkRaminingEnemies
+			call clearScreen
+			push offset LoserText
+			call printText
+			jmp exit
 			
-		
-		
-	
+			checkRaminingEnemies:
+			call countRemainingEnemies
+			cmp [numOfEnemies], 0
+			jne checkWinning
+			call clearScreen
+			push offset WinnerText
+			call printText
+			jmp exit
+			
+			checkWinning:
+			mov ax, offset enemiesArray
+			call maxYOutOfEnemyArray
+			add dx, [enemyClusterY]
+			cmp dx, 185
+			jl skipEnemyProjectile1Update
+			call clearScreen
+			push offset LoserText
+			call printText
+			jmp exit
+			
+			skipEnemyProjectile1Update:
+			call bombCollision
 	jmp mainLoop
 	
 	

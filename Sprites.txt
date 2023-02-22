@@ -57,3 +57,45 @@ smallInvaderPose2
 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h,
 00h, 00h, 00h, 0Fh, 00h, 0Fh, 0Fh, 00h, 0Fh, 00h, 00h, 00h,
 00h, 00h, 0Fh, 00h, 0Fh, 00h, 00h, 0Fh, 00h, 0Fh, 00h, 00h
+
+
+cannonSprite
+00h, 00h, 00h, 00h, 00h, 00h, 0Ah, 00h, 00h, 00h, 00h, 00h, 00h,
+00h, 00h, 00h, 00h, 00h, 0Ah, 0Ah, 0Ah, 00h, 00h, 00h, 00h, 00h,
+00h, 00h, 00h, 00h, 00h, 0Ah, 0Ah, 0Ah, 00h, 00h, 00h, 00h, 00h,
+00h, 00h, 00h, 00h, 00h, 0Ah, 0Ah, 0Ah, 00h, 00h, 00h, 00h, 00h,
+00h, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 00h,
+0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah,
+0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah,
+0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah,
+0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah,
+
+cannonSpriteDestroyed1
+00h, 00h, 00h, 00h, 00h, 00h, 0Ah, 00h, 00h, 00h, 00h, 0Ah, 00h,
+0Ah, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h,
+00h, 00h, 00h, 0Ah, 00h, 00h, 0Ah, 00h, 00h, 00h, 00h, 0Ah, 00h,
+00h, 0Ah, 00h, 00h, 00h, 0Ah, 00h, 00h, 00h, 0Ah, 00h, 00h, 0Ah,
+00h, 00h, 00h, 00h, 0Ah, 0Ah, 00h, 0Ah, 00h, 00h, 00h, 00h, 00h,
+0Ah, 00h, 00h, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 00h, 00h, 0Ah, 00h,
+00h, 00h, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 00h, 00h, 00h,
+0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 00h
+
+cannonSpriteDestroyed2
+00h, 00h, 00h, 0Ah, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h,
+00h, 0Ah, 00h, 00h, 00h, 00h, 0Ah, 00h, 00h, 0Ah, 00h, 00h, 00h,
+00h, 00h, 00h, 0Ah, 00h, 0Ah, 00h, 00h, 0Ah, 00h, 0Ah, 00h, 00h,
+00h, 0Ah, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 0Ah, 00h,
+00h, 00h, 00h, 00h, 0Ah, 00h, 0Ah, 0Ah, 00h, 00h, 00h, 00h, 00h,
+0Ah, 00h, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 00h, 00h, 00h,
+00h, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 00h, 00h,
+0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 0Ah, 00h
+
+invadersExplosion
+00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h,
+00h, 00h, 0Fh, 00h, 00h, 0Fh, 00h, 00h, 0Fh, 00h, 00h, 0Fh,
+00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 0Fh, 00h, 0Fh, 00h,
+0Fh, 0Fh, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h,
+00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 0Fh, 0Fh,
+00h, 0Fh, 00h, 0Fh, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h,
+0Fh, 00h, 00h, 0Fh, 00h, 00h, 0Fh, 00h, 00h, 0Fh, 00h, 00h,
+00h, 00h, 00h, 00h, 00h, 00h, 0Fh, 00h, 00h, 00h, 00h, 00h
